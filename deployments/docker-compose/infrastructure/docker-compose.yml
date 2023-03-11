@@ -1,0 +1,25 @@
+version: '3'
+
+services:
+  postgresql:
+    image: postgres
+    ports:
+      - '5431:5432'
+    environment:
+      POSTGRES_DB: "wildberries"
+      POSTGRES_USER: "user"
+      POSTGRES_PASSWORD: "password"
+    volumes:
+        - /var/lib/postgresql/data:/var/lib/postgresql/data
+  nats-streaming:
+    command:
+      - "--cluster_id"
+      - wildberries
+      - "--http_port"
+      - "8223"
+      - "--port"
+      - "4223"
+    image: nats-streaming
+    ports:
+      - '4223:4223'
+      - '8223:8223'
